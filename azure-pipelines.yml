@@ -44,6 +44,9 @@ steps:
 
 - task: DotNetCoreCLI@2
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 586e91fa06106bcb1cc6d93416cd3106c45be80e
   displayName: 'Install ReportGenerator'
   inputs:
     command: custom
@@ -51,6 +54,7 @@ steps:
     arguments: 'install --global dotnet-reportgenerator-globaltool'
 
 - task: DotNetCoreCLI@2
+<<<<<<< HEAD
   displayName: 'Run unit tests - $(buildConfiguration)'
   inputs:
     command: 'test'
@@ -69,14 +73,29 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
 
 =======
+=======
+>>>>>>> 586e91fa06106bcb1cc6d93416cd3106c45be80e
   displayName: 'Run unit tests - $(buildConfiguration)'
   inputs:
     command: 'test'
-    arguments: '--no-build --configuration $(buildConfiguration)'
+    arguments: '--no-build --configuration $(buildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
     publishTestResults: true
     projects: '**/*.Tests.csproj'
 
+<<<<<<< HEAD
 >>>>>>> 3f393f1127912b32ccc488b3ebbf723fe751815f
+=======
+- script: |
+    reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines
+  displayName: 'Create code coverage report'
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage report'
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
+
+>>>>>>> 586e91fa06106bcb1cc6d93416cd3106c45be80e
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
   inputs:
